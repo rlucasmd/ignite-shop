@@ -38,6 +38,7 @@ export const ProductDetails = styled("div", {
     marginTop: "1rem",
     display: "block",
     fontSize: "$2xl",
+    color: "$green300",
   },
   p: {
     marginTop: "2.5rem",
