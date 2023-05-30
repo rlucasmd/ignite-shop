@@ -21,7 +21,7 @@ export const Product = styled("a", {
   justifyContent: "center",
 
   minWidth: "520px",
-  height: "656px",
+  height: "556px",
 
   img: {
     objectFit: "cover",
