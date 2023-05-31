@@ -3,7 +3,7 @@ import {
   ProductContainer,
   ProductDetails,
 } from "@/styles/pages/product";
-// import { useRouter } from "next/router";
+import { useRouter } from "next/router";
 // import imageDefault from "../../assets/camisetas/1.png";
 import Image from "next/image";
 import { GetStaticPaths, GetStaticProps } from "next";
@@ -17,12 +17,18 @@ interface ProductProps {
     imageUrl: string;
     price: string;
     description: string;
+    defaultPriceId: string;
   };
 }
 
 export default function Product({ product }: ProductProps) {
-  // const { query } = useRouter();
-  // console.log(query);
+  function handleBuyProduct() {
+    console.log(product.defaultPriceId);
+  }
+  const { isFallback } = useRouter();
+  if (isFallback) {
+    return <p>IsLoading...</p>;
+  }
 
   return (
     <ProductContainer>
@@ -35,7 +41,7 @@ export default function Product({ product }: ProductProps) {
 
         <p>{product.description}</p>
 
-        <button>Comprar Agora</button>
+        <button onClick={handleBuyProduct}>Comprar Agora</button>
       </ProductDetails>
     </ProductContainer>
   );
@@ -44,7 +50,7 @@ export default function Product({ product }: ProductProps) {
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: [{ params: { id: "prod_NzDV6sPFX5O7XO" } }],
-    fallback: false,
+    fallback: true,
   };
 };
 
@@ -70,6 +76,7 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
           currency: "BRL",
         }).format(price.unit_amount! / 100),
         description: product.description,
+        defaultPriceId: price.id,
       },
     },
     revalidate: 60 * 60 * 1, // 1 hour
