@@ -8,6 +8,7 @@ export const HomeContainer = styled("main", {
   maxWidth: "calc(100vw - ((100vw - 1180px)/2))",
   marginLeft: "auto",
   minHeight: "656",
+  position: "relative",
 });
 
 export const Product = styled(Link, {
@@ -67,4 +68,35 @@ export const Product = styled(Link, {
       opacity: 1,
     },
   },
+});
+
+const DefaultButton = styled("button", {
+  border: 0,
+  background: "transparent",
+  cursor: "pointer",
+  display: "flex",
+  height: "100%",
+  width: 136,
+  alignItems: "center",
+
+  transition: "opacity 0.3s",
+  color: "$gray300",
+
+  "&:disabled": {
+    opacity: 0,
+  },
+});
+
+export const ArrowButtonLeft = styled(DefaultButton, {
+  position: "absolute",
+  left: 0,
+  background:
+    "linear-gradient(270deg, rgba(18, 18, 20, 0) 0%, rgba(18, 18, 20, 0.75) 100%)",
+});
+export const ArrowButtonRight = styled(DefaultButton, {
+  position: "absolute",
+  justifyContent: "flex-end",
+  background:
+    "linear-gradient(90deg, rgba(18, 18, 20, 0) 0%, rgba(18, 18, 20, 0.75) 100%)",
+  right: 0,
 });

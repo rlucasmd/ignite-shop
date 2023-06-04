@@ -5,11 +5,18 @@ import Head from "next/head";
 
 import { useKeenSlider } from "keen-slider/react";
 
-import { HomeContainer, Product } from "@/styles/pages/home";
+import {
+  ArrowButtonLeft,
+  ArrowButtonRight,
+  HomeContainer,
+  Product,
+} from "@/styles/pages/home";
 import { stripe } from "@/lib/stripe";
 
 import "keen-slider/keen-slider.min.css";
 import Stripe from "stripe";
+import { CaretLeft, CaretRight } from "phosphor-react";
+import { useState } from "react";
 
 interface HomeProps {
   products: {
@@ -21,12 +28,21 @@ interface HomeProps {
 }
 
 export default function Home({ products }: HomeProps) {
-  const [sliderRef] = useKeenSlider({
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [sliderLoaded, setSliderLoaded] = useState(false);
+  const [sliderRef, instanceRef] = useKeenSlider({
     slides: {
-      perView: "auto",
+      perView: 1.8,
       spacing: 48,
     },
+    slideChanged(slider) {
+      setCurrentSlide(slider.track.details.rel);
+    },
+    created() {
+      setSliderLoaded(true);
+    },
   });
+  console.log(instanceRef.current?.track.details.slides.length);
 
   return (
     <>
@@ -51,6 +67,29 @@ export default function Home({ products }: HomeProps) {
             </Product>
           );
         })}
+        {sliderLoaded && instanceRef.current && (
+          <>
+            <ArrowButtonLeft
+              onClick={(e) => {
+                instanceRef.current?.prev();
+              }}
+              disabled={currentSlide === 0}
+            >
+              <CaretLeft size={48} weight="bold" />
+            </ArrowButtonLeft>
+            <ArrowButtonRight
+              onClick={(e) => {
+                instanceRef.current?.next();
+              }}
+              disabled={
+                currentSlide ===
+                instanceRef.current!.track.details.slides.length - 1
+              }
+            >
+              <CaretRight size={48} weight="bold" />
+            </ArrowButtonRight>
+          </>
+        )}
       </HomeContainer>
     </>
   );
