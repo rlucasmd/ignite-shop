@@ -9,6 +9,7 @@ export const HomeContainer = styled("main", {
   marginLeft: "auto",
   minHeight: "656",
   position: "relative",
+  marginBottom: "2rem",
 });
 
 export const Product = styled(Link, {
@@ -81,6 +82,7 @@ const DefaultButton = styled("button", {
 
   transition: "opacity 0.3s",
   color: "$gray300",
+  // padding: "0 1rem",
 
   "&:disabled": {
     opacity: 0,
@@ -89,12 +91,14 @@ const DefaultButton = styled("button", {
 
 export const ArrowButtonLeft = styled(DefaultButton, {
   position: "absolute",
+  paddingLeft: 16,
   left: 0,
   background:
     "linear-gradient(270deg, rgba(18, 18, 20, 0) 0%, rgba(18, 18, 20, 0.75) 100%)",
 });
 export const ArrowButtonRight = styled(DefaultButton, {
   position: "absolute",
+  paddingRight: 16,
   justifyContent: "flex-end",
   background:
     "linear-gradient(90deg, rgba(18, 18, 20, 0) 0%, rgba(18, 18, 20, 0.75) 100%)",

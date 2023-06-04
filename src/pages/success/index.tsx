@@ -15,7 +15,7 @@ interface SuccessProps {
 }
 
 export default function Success({ customerName, product }: SuccessProps) {
-  console.log(product, customerName);
+  // console.log(product, customerName);
   return (
     <>
       <Head>

@@ -17,14 +17,10 @@ import "keen-slider/keen-slider.min.css";
 import Stripe from "stripe";
 import { CaretLeft, CaretRight } from "phosphor-react";
 import { useState } from "react";
+import { IProduct } from "@/contexts/CartContext";
 
 interface HomeProps {
-  products: {
-    id: string;
-    name: string;
-    price: string;
-    imageUrl: string;
-  }[];
+  products: IProduct[];
 }
 
 export default function Home({ products }: HomeProps) {
@@ -42,7 +38,6 @@ export default function Home({ products }: HomeProps) {
       setSliderLoaded(true);
     },
   });
-  console.log(instanceRef.current?.track.details.slides.length);
 
   return (
     <>
@@ -110,6 +105,8 @@ export const getStaticProps: GetStaticProps = async () => {
         style: "currency",
         currency: "BRL",
       }).format(price.unit_amount! / 100),
+      numberPrice: price.unit_amount,
+      description: product.description,
     };
   });
 
