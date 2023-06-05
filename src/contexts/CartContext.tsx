@@ -7,6 +7,7 @@ export interface IProduct {
   imageUrl: string;
   numberPrice: number;
   description: string;
+  defaultPriceId: string;
 }
 
 interface CartContextProps {
@@ -29,7 +30,7 @@ function CartContextProvider({ children }: CartContextProviderProps) {
   }
 
   function addProductToCart(product: IProduct) {
-    if (isProductAlreadyInCart(product.id)) {
+    if (!isProductAlreadyInCart(product.id)) {
       setCart((state) => [...state, product]);
     }
   }
