@@ -9,7 +9,7 @@ type CartButtonProps = ComponentProps<typeof CartButtonContainer> & {
 const CartButton = forwardRef<HTMLButtonElement, CartButtonProps>(
   ({ quantity, ...rest }, ref) => (
     <CartButtonContainer {...rest} ref={ref}>
-      {quantity && quantity > 0 && <span>{quantity} </span>}
+      {quantity && quantity > 0 ? <span>{quantity} </span> : ""}
       <Handbag weight="bold" />
     </CartButtonContainer>
   ),

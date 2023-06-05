@@ -43,6 +43,11 @@ export const Product = styled(Link, {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
+    ">div": {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+    },
 
     backgroundColor: "rgba(0, 0, 0, 0.6)",
     padding: "2rem",

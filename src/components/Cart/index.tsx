@@ -7,6 +7,7 @@ import {
   ModalTitle,
   ProductList,
   Product,
+  ImageContainer,
 } from "./styles";
 import { X } from "phosphor-react";
 import { useCart } from "@/hooks/useCart";
@@ -17,7 +18,7 @@ function Cart() {
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
-        <CartButton quantity={1} />
+        <CartButton quantity={cart.length} />
       </Dialog.Trigger>
       <Dialog.Portal>
         <ModalOverlay />
@@ -29,10 +30,19 @@ function Cart() {
           <ProductList>
             {cart.map((product) => (
               <Product key={product.id}>
-                <Image src={product.imageUrl} alt="" width={102} height={94} />
+                <ImageContainer>
+                  <Image
+                    src={product.imageUrl}
+                    alt=""
+                    width={102}
+                    height={94}
+                  />
+                </ImageContainer>
                 <div>
-                  <span>{product.name}</span>
-                  <strong>{product.price}</strong>
+                  <div>
+                    <span>{product.name}</span>
+                    <strong>{product.price}</strong>
+                  </div>
                   <button>Remover</button>
                 </div>
               </Product>

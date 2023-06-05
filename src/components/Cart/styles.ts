@@ -29,10 +29,59 @@ const ModalTitle = styled(Dialog.Title, {
   fontWeight: "bold",
 });
 
-const ImageContainer = styled("div", {});
+const ImageContainer = styled("div", {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: 102,
+  height: 94,
+  background: "linear-gradient(180deg, #1EA483 0%, #7465D4 100%)",
+  border: "none",
+  borderRadius: 8,
 
-const ProductList = styled("section", {});
-const Product = styled("div", {});
+  img: {
+    objectFit: "cover",
+  },
+});
+
+const ProductList = styled("section", {
+  marginTop: "2rem",
+  display: "flex",
+  gap: "1.5rem",
+  flexDirection: "column",
+});
+const Product = styled("div", {
+  display: "flex",
+  gap: "1.5rem",
+  justifyContent: "flex-start",
+
+  ">div": {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    ">div": {
+      display: "flex",
+      flexDirection: "column",
+      gap: 6,
+      span: {
+        color: "$gray100",
+        size: "$md",
+      },
+      strong: {
+        color: "$gray100",
+        size: "$md",
+      },
+    },
+    ">button": {
+      border: "none",
+      background: "transparent",
+      color: "$green500",
+      fontWeight: "bold",
+      marginRight: "auto",
+      cursor: "pointer",
+    },
+  },
+});
 
 export {
   ModalContent,
@@ -41,4 +90,5 @@ export {
   ModalTitle,
   ProductList,
   Product,
+  ImageContainer,
 };

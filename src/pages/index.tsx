@@ -16,8 +16,10 @@ import { stripe } from "@/lib/stripe";
 import "keen-slider/keen-slider.min.css";
 import Stripe from "stripe";
 import { CaretLeft, CaretRight } from "phosphor-react";
-import { useState } from "react";
+import { MouseEvent, useState } from "react";
 import { IProduct } from "@/contexts/CartContext";
+import { CartButton } from "@/components/CartButton";
+import { useCart } from "@/hooks/useCart";
 
 interface HomeProps {
   products: IProduct[];
@@ -26,6 +28,7 @@ interface HomeProps {
 export default function Home({ products }: HomeProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [sliderLoaded, setSliderLoaded] = useState(false);
+  const { isProductAlreadyInCart, addProductToCart } = useCart();
   const [sliderRef, instanceRef] = useKeenSlider({
     slides: {
       perView: 1.8,
@@ -38,6 +41,14 @@ export default function Home({ products }: HomeProps) {
       setSliderLoaded(true);
     },
   });
+
+  function handleAddProduct(
+    e: MouseEvent<HTMLButtonElement>,
+    product: IProduct,
+  ) {
+    e.preventDefault();
+    addProductToCart(product);
+  }
 
   return (
     <>
@@ -56,8 +67,16 @@ export default function Home({ products }: HomeProps) {
             >
               <Image src={product.imageUrl} alt="" width={520} height={480} />
               <footer>
-                <strong>{product.name}</strong>
-                <span>{product.price}</span>
+                <div>
+                  <strong>{product.name}</strong>
+                  <span>{product.price}</span>
+                </div>
+                <CartButton
+                  disabled={isProductAlreadyInCart(product.id)}
+                  size="large"
+                  color="green"
+                  onClick={(e) => handleAddProduct(e, product)}
+                />
               </footer>
             </Product>
           );
