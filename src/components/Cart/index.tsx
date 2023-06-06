@@ -16,7 +16,7 @@ import { useCart } from "@/hooks/useCart";
 import Image from "next/image";
 
 function Cart() {
-  const { cart, totalCartPrice } = useCart();
+  const { cart, totalCartPrice, removeProductFromCart } = useCart();
   const moneyFormat = new Intl.NumberFormat("pt-BR", {
     style: "currency",
     currency: "BRL",
@@ -46,7 +46,9 @@ function Cart() {
                 <ProductDetails>
                   <p>{product.name}</p>
                   <strong>{product.price}</strong>
-                  <button>Remover</button>
+                  <button onClick={() => removeProductFromCart(product.id)}>
+                    Remover
+                  </button>
                 </ProductDetails>
               </Product>
             ))}
