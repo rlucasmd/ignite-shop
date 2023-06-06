@@ -90,7 +90,7 @@ const DefaultButton = styled("button", {
   // padding: "0 1rem",
 
   "&:disabled": {
-    opacity: 0,
+    visibility: "hidden",
   },
 });
 
