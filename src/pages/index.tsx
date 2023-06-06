@@ -126,6 +126,7 @@ export const getStaticProps: GetStaticProps = async () => {
       }).format(price.unit_amount! / 100),
       numberPrice: price.unit_amount,
       description: product.description,
+      defaultPriceId: price.id,
     };
   });
 

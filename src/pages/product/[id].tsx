@@ -8,8 +8,6 @@ import Image from "next/image";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { stripe } from "@/lib/stripe";
 import Stripe from "stripe";
-import axios from "axios";
-import { useState } from "react";
 import Head from "next/head";
 import { IProduct } from "@/contexts/CartContext";
 import { useCart } from "@/hooks/useCart";

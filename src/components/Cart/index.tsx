@@ -14,6 +14,8 @@ import {
 import { X } from "phosphor-react";
 import { useCart } from "@/hooks/useCart";
 import Image from "next/image";
+import { useState } from "react";
+import axios from "axios";
 
 function Cart() {
   const { cart, totalCartPrice, removeProductFromCart } = useCart();
@@ -21,6 +23,24 @@ function Cart() {
     style: "currency",
     currency: "BRL",
   }).format;
+
+  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
+    useState(false);
+
+  async function handleCheckout() {
+    try {
+      setIsCreatingCheckoutSession(true);
+      const response = await axios.post("/api/checkout", {
+        products: cart,
+      });
+      const { checkoutUrl } = response.data;
+
+      window.location.href = checkoutUrl;
+    } catch (err) {
+      console.error(err);
+      setIsCreatingCheckoutSession(false);
+    }
+  }
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
@@ -64,7 +84,12 @@ function Cart() {
                 <p>{moneyFormat(totalCartPrice / 100)}</p>
               </div>
             </CartDetailsFooter>
-            <button>Finalizar compra</button>
+            <button
+              disabled={isCreatingCheckoutSession || cart.length <= 0}
+              onClick={handleCheckout}
+            >
+              Finalizar compra
+            </button>
           </CartFooter>
         </ModalContent>
       </Dialog.Portal>
