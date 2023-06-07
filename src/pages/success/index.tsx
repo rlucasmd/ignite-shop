@@ -1,5 +1,9 @@
 import { stripe } from "@/lib/stripe";
-import { ImageContainer, SuccessContainer } from "@/styles/pages/success";
+import {
+  ImageContainer,
+  ImagesContainer,
+  SuccessContainer,
+} from "@/styles/pages/success";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
@@ -8,14 +12,18 @@ import Stripe from "stripe";
 
 interface SuccessProps {
   customerName: string;
-  product: {
+  // product: {
+  //   name: string;
+  //   imageUrl: string;
+  // };
+  products: {
     name: string;
     imageUrl: string;
-  };
+  }[];
 }
 
-export default function Success({ customerName, product }: SuccessProps) {
-  // console.log(product, customerName);
+export default function Success({ customerName, products }: SuccessProps) {
+  // console.log(products, customerName);
   return (
     <>
       <Head>
@@ -23,15 +31,23 @@ export default function Success({ customerName, product }: SuccessProps) {
         <meta name="robot" content="noindex"></meta>
       </Head>
       <SuccessContainer>
+        <ImagesContainer>
+          {products.map((product) => (
+            <ImageContainer key={product.name}>
+              <Image src={product.imageUrl} width={130} height={132} alt="" />
+            </ImageContainer>
+          ))}
+        </ImagesContainer>
         <h1>Compra Efetuada</h1>
-
-        <ImageContainer>
-          <Image src={product.imageUrl} width={120} height={110} alt="" />
-        </ImageContainer>
-
         <p>
           Uhuul <strong>{customerName}</strong>, sua{" "}
-          <strong>{product.name}</strong> já está a caminho da sua casa.{" "}
+          {products.length === 2 ? (
+            <strong>{products[0].name}</strong>
+          ) : (
+            `Compra de ${products.length}`
+          )}{" "}
+          já está a caminho da sua casa.
+          {/* <strong>{products[0].name}</strong> já está a caminho da sua casa.{" "} */}
         </p>
 
         <Link href="/">Voltar ao catálogo</Link>
@@ -56,14 +72,21 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   });
   const customerName = session.customer_details?.name;
   const product = session.line_items?.data[0].price?.product as Stripe.Product;
+  const products = session.line_items?.data.map((product) => {
+    return product.price?.product as unknown as Stripe.Product;
+  });
 
   return {
     props: {
       customerName,
-      product: {
-        name: product.name,
-        imageUrl: product.images[0],
-      },
+      // product: {
+      //   name: product.name,
+      //   imageUrl: product.images[0],
+      // },
+      products: products?.map((p) => ({
+        name: p.name,
+        imageUrl: p.images[0],
+      })),
     },
   };
 };

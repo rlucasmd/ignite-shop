@@ -11,6 +11,7 @@ export const SuccessContainer = styled("main", {
   h1: {
     fontSize: "$2xl",
     color: "$gray100",
+    marginTop: 52,
   },
   p: {
     fontSize: "$xl",
@@ -36,13 +37,16 @@ export const SuccessContainer = styled("main", {
   },
 });
 
+export const ImagesContainer = styled("div", {
+  display: "flex",
+});
+
 export const ImageContainer = styled("div", {
-  width: "100%",
-  maxWidth: 138,
-  height: 145,
+  borderRadius: "50%",
+  height: 140,
+  width: 140,
 
   background: "linear-gradient(100deg, #1ea483 0%, #7465d4 100%)",
-  borderRadius: 8,
   padding: "0.25rem",
 
   marginTop: "4rem",
@@ -53,4 +57,8 @@ export const ImageContainer = styled("div", {
   image: {
     objectFit: "cover",
   },
+  "&:not(:first-child)": {
+    marginLeft: -58,
+  },
+  boxShadow: "0px 0px 60px rgba(0, 0, 0, 0.8)",
 });
