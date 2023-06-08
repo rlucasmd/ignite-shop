@@ -7,4 +7,15 @@ export const HeaderContainer = styled("header", {
   margin: "0 auto",
   display: "flex",
   justifyContent: "space-between",
+
+  variants: {
+    centered: {
+      true: {
+        justifyContent: "center",
+      },
+      false: {
+        justifyContent: "space-between",
+      },
+    },
+  },
 });

@@ -12,10 +12,6 @@ import Stripe from "stripe";
 
 interface SuccessProps {
   customerName: string;
-  // product: {
-  //   name: string;
-  //   imageUrl: string;
-  // };
   products: {
     name: string;
     imageUrl: string;
@@ -23,7 +19,6 @@ interface SuccessProps {
 }
 
 export default function Success({ customerName, products }: SuccessProps) {
-  // console.log(products, customerName);
   return (
     <>
       <Head>
@@ -41,13 +36,12 @@ export default function Success({ customerName, products }: SuccessProps) {
         <h1>Compra Efetuada</h1>
         <p>
           Uhuul <strong>{customerName}</strong>, sua{" "}
-          {products.length === 2 ? (
+          {products.length === 1 ? (
             <strong>{products[0].name}</strong>
           ) : (
             `Compra de ${products.length}`
           )}{" "}
           já está a caminho da sua casa.
-          {/* <strong>{products[0].name}</strong> já está a caminho da sua casa.{" "} */}
         </p>
 
         <Link href="/">Voltar ao catálogo</Link>
@@ -71,7 +65,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     expand: ["line_items", "line_items.data.price.product"],
   });
   const customerName = session.customer_details?.name;
-  const product = session.line_items?.data[0].price?.product as Stripe.Product;
+  // const product = session.line_items?.data[0].price?.product as Stripe.Product;
   const products = session.line_items?.data.map((product) => {
     return product.price?.product as unknown as Stripe.Product;
   });

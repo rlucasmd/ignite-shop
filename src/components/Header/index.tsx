@@ -9,7 +9,7 @@ function Header() {
   const { pathname } = useRouter();
   const showCartButton = pathname !== "/success";
   return (
-    <HeaderContainer>
+    <HeaderContainer centered={!showCartButton}>
       <Link href="/">
         <Image src={logoImage} alt="" />
       </Link>
