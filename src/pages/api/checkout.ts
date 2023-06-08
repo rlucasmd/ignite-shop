@@ -7,8 +7,6 @@ export default async function handler(
   res: NextApiResponse,
 ) {
   const { products } = req.body as { products: IProduct[] };
-  console.log(products);
-  // const { priceId } = req.body;
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method is not allowed" });
   }
