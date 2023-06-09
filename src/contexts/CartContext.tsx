@@ -1,5 +1,5 @@
-import { ReactNode, createContext, useState } from "react";
-
+import { ReactNode, createContext, useEffect, useState } from "react";
+const version = process.env.npm_package_version || "0.1.0";
 export interface IProduct {
   id: string;
   name: string;
@@ -9,6 +9,8 @@ export interface IProduct {
   description: string;
   defaultPriceId: string;
 }
+
+const localStorageCartKey = `ignite-shop@cart-${version}`;
 
 interface CartContextProps {
   cart: IProduct[];
@@ -24,7 +26,23 @@ interface CartContextProviderProps {
 export const CartContext = createContext({} as CartContextProps);
 
 function CartContextProvider({ children }: CartContextProviderProps) {
-  const [cart, setCart] = useState<IProduct[]>([]);
+  const [cart, setCart] = useState<IProduct[]>(() => {
+    if (typeof window !== "undefined") {
+      const storageCartItens = localStorage.getItem(localStorageCartKey);
+      if (!storageCartItens) return;
+      const cartItens = JSON.parse(storageCartItens);
+      return cartItens;
+    }
+    return [];
+  });
+
+  // useEffect(() => {}, []);
+
+  useEffect(() => {
+    console.log(cart);
+    localStorage.setItem(localStorageCartKey, JSON.stringify(cart));
+  }, [cart]);
+
   function isProductAlreadyInCart(productId: string) {
     return cart.some((product) => product.id === productId);
   }
