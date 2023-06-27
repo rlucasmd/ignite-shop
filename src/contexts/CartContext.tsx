@@ -36,7 +36,7 @@ function CartContextProvider({ children }: CartContextProviderProps) {
   }, []);
 
   useEffect(() => {
-    console.log(cart);
+    // console.log(cart);
     localStorage.setItem(localStorageCartKey, JSON.stringify(cart));
   }, [cart]);
 
