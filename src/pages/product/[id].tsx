@@ -40,10 +40,7 @@ export default function Product({ product }: ProductProps) {
 
           <p>{product.description}</p>
 
-          <button
-            disabled={isProductAlreadyInCart(product.id)}
-            onClick={() => addProductToCart(product)}
-          >
+          <button onClick={() => addProductToCart(product)}>
             {isProductOnCart
               ? "O item já está no carrinho"
               : "Colocar na sacola"}

@@ -53,6 +53,11 @@ function Cart() {
           </CloseButton>
           <ModalTitle>Sacola de compras</ModalTitle>
           <ProductList>
+            {cart.length === 0 && (
+              <div>
+                <h2>O carrinho está vazio</h2>
+              </div>
+            )}
             {cart.map((product) => (
               <Product key={product.id}>
                 <ImageContainer>

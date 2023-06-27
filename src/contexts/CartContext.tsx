@@ -26,17 +26,14 @@ interface CartContextProviderProps {
 export const CartContext = createContext({} as CartContextProps);
 
 function CartContextProvider({ children }: CartContextProviderProps) {
-  const [cart, setCart] = useState<IProduct[]>(() => {
-    if (typeof window !== "undefined") {
-      const storageCartItens = localStorage.getItem(localStorageCartKey);
-      if (!storageCartItens) return;
-      const cartItens = JSON.parse(storageCartItens);
-      return cartItens;
-    }
-    return [];
-  });
+  const [cart, setCart] = useState<IProduct[]>([]);
 
-  // useEffect(() => {}, []);
+  useEffect(() => {
+    const storageCartItens = localStorage.getItem(localStorageCartKey);
+    if (!storageCartItens) return;
+    const cartItens = JSON.parse(storageCartItens);
+    setCart(cartItens);
+  }, []);
 
   useEffect(() => {
     console.log(cart);
